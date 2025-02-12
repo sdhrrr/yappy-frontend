@@ -1,0 +1,40 @@
+/* src/components/JoinChat.css */
+.join-chat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f7f9fc;
+  }
+  
+  .join-chat h2 {
+    margin-bottom: 20px;
+    color: #3b5998;
+    font-size: 28px;
+  }
+  
+  .join-chat input {
+    width: 300px;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .join-chat button {
+    width: 300px;
+    padding: 12px;
+    background: #3b5998;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+  }
+  
+  .join-chat button:hover {
+    background: #2e4372;
+  }
