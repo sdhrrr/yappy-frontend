@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import WebSocketService from '../WebSocketService';
+import Navbar from './Navbar';
 import './ChatRoom.css';
 
 const JOIN = 'JOIN';
@@ -46,19 +47,22 @@ function ChatRoom({ username, onLogout }) {
   };
 
   return (
-    <div className='chat-room'>
-      <div className='chat-list'>
-        <header className='chat-room-header'>
-          <h2>Chats</h2>
-          <button className='logout-btn' onClick={onLogout}>
-            Logout
-          </button>
-        </header>
-        {/* Add chat list items here */}
-      </div>
-      <div className='chat-area'>
-        <MessageList messages={messages} username={username} />
-        <MessageInput onSendMessage={sendMessage} />
+    <div className='app-container'>
+      <Navbar />
+      <div className='chat-room'>
+        <div className='chat-list'>
+          <header className='chat-room-header'>
+            <h2>Chats</h2>
+            <button className='logout-btn' onClick={onLogout}>
+              Logout
+            </button>
+          </header>
+          {/* Add chat list items here */}
+        </div>
+        <div className='chat-area'>
+          <MessageList messages={messages} username={username} />
+          <MessageInput onSendMessage={sendMessage} />
+        </div>
       </div>
     </div>
   );
