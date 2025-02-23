@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import ChatRoom from './components/ChatRoom';
 import JoinChat from './components/JoinChat';
+import Navbar from './components/Navbar';
 import './App.css';
 
 function App() {
@@ -12,12 +13,14 @@ function App() {
   };
 
   return (
-    <div className='app'>
-      {username ? (
-        <ChatRoom username={username} onLogout={handleLogout} />
-      ) : (
-        <JoinChat onUsernameSubmission={setUsername} />
-      )}
+    <div> 
+      <div className='app'>
+        {username ? (
+          <ChatRoom username={username} onLogout={handleLogout} />
+        ) : (
+          <JoinChat onUsernameSubmission={setUsername} />
+        )}
+      </div>
     </div>
   );
 }

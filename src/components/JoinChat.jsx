@@ -1,5 +1,6 @@
-// src/components/JoinChat.js
 import React, { useState } from 'react';
+import './JoinChat.css';
+import logoImg from '/curb.png';
 
 function JoinChat({ onUsernameSubmission }) {
   const [username, setUsername] = useState('');
@@ -18,16 +19,26 @@ function JoinChat({ onUsernameSubmission }) {
   };
 
   return (
-    <div className='joinchat'>
-      <h2>Join Chat</h2>
-      <input
-        type='text'
-        placeholder='Enter username'
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        onKeyDown={handleKeyPress}
-      />
-      <button onClick={handleSubmit}>Join</button>
+    <div className="joinchat-wrapper">
+      <div className="joinchat-container">
+        <div className="joinchat-left">
+          <div className="overlay">
+            <img src={logoImg} alt="Chime Logo" className="logo" />
+            <p>Connect. Converse. Chill.</p>
+          </div>
+        </div>
+        <div className="joinchat-right">
+          <h2>Join the Global Chat</h2>
+          <input
+            type="text"
+            placeholder="Enter username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            onKeyDown={handleKeyPress}
+          />
+          <button onClick={handleSubmit}>Join</button>
+        </div>
+      </div>
     </div>
   );
 }
