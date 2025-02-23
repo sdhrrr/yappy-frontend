@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
 import WebSocketService from '../WebSocketService';
-import MessageList from './MessageList';
-import MessageInput from './MessageInput';
 import './ChatRoom.css';
 
 const JOIN = 'JOIN';
@@ -21,18 +19,18 @@ function ChatRoom({ username, onLogout }) {
     return () => {
       webSocketService.current.disconnect();
     };
-  }, []); // Ensure the dependency array is empty to run only once
+  }, []);
 
   const onConnected = () => {
     const chatMessage = {
       sender: username,
-      type: JOIN,
+      content: `${username} has joined the chat`,
+      type: 'system',
     };
     webSocketService.current.addUser(chatMessage);
   };
 
   const onMessageReceived = (message) => {
-    console.log("Message received: ", message);
     setMessages((prevMessages) => [...prevMessages, message]);
   };
 
@@ -49,14 +47,73 @@ function ChatRoom({ username, onLogout }) {
 
   return (
     <div className='chat-room'>
-      <header className='chat-room-header'>
-        <h2>Chat Room</h2>
-        <button className='logout-btn' onClick={onLogout}>
-          Logout
-        </button>
-      </header>
-      <MessageList messages={messages} username={username} />
-      <MessageInput onSendMessage={sendMessage} />
+      <div className='chat-list'>
+        <header className='chat-room-header'>
+          <h2>Chats</h2>
+          <button className='logout-btn' onClick={onLogout}>
+            Logout
+          </button>
+        </header>
+        {/* Add chat list items here */}
+      </div>
+      <div className='chat-area'>
+        <MessageList messages={messages} username={username} />
+        <MessageInput onSendMessage={sendMessage} />
+      </div>
+    </div>
+  );
+}
+
+function MessageList({ messages, username }) {
+  return (
+    <div className="message-list">
+      {messages.map((message, index) => (
+        <div
+          key={index}
+          className={`message ${
+            message.type === 'system'
+              ? 'system'
+              : message.sender === username
+              ? 'sent'
+              : 'received'
+          }`}
+        >
+          {message.type !== 'system' && (
+            <div className="sender">{message.sender}</div>
+          )}
+          <div>{message.content}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function MessageInput({ onSendMessage }) {
+  const [message, setMessage] = useState('');
+
+  const handleSend = () => {
+    if (message.trim() !== '') {
+      onSendMessage(message);
+      setMessage('');
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSend();
+    }
+  };
+
+  return (
+    <div className="message-input">
+      <input
+        type="text"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        onKeyPress={handleKeyPress}
+        placeholder="Type your message..."
+      />
+      <button onClick={handleSend}>Send</button>
     </div>
   );
 }
