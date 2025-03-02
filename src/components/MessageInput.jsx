@@ -1,4 +1,3 @@
-// src/components/MessageInput.js
 import React, { useState } from 'react';
 import './MessageInput.css';
 
@@ -6,27 +5,26 @@ function MessageInput({ onSendMessage }) {
   const [message, setMessage] = useState('');
 
   const handleSend = () => {
-    const trimmedMessage = message.trim();
-    if (trimmedMessage) {
-      onSendMessage(trimmedMessage);
+    if (message.trim() !== '') {
+      onSendMessage(message);
       setMessage('');
     }
   };
 
-  const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
       handleSend();
     }
   };
 
   return (
-    <div className='message-input'>
+    <div className="message-input">
       <input
-        type='text'
-        placeholder='Type your message...'
+        type="text"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        onKeyDown={handleKeyPress}
+        onKeyPress={handleKeyPress}
+        placeholder="Type your message..."
       />
       <button onClick={handleSend}>Send</button>
     </div>

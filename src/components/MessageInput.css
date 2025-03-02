@@ -1,31 +1,49 @@
-/* src/components/MessageInput.css */
 .message-input {
-    display: flex;
-    padding: 15px;
-    background: #fff;
-    border-top: 1px solid #ddd;
-  }
-  
-  .message-input input {
-    flex: 1;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    margin-right: 10px;
-    font-size: 16px;
-  }
-  
-  .message-input button {
-    background: #3b5998;
-    color: #fff;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background 0.3s;
-  }
-  
-  .message-input button:hover {
-    background: #2e4372;
-  }
+  display: flex;
+  background: #1a1d24;
+  border-top: 1px solid #2a2f38;
+  padding: 12px 24px;
+  gap: 18px;
+}
+
+.message-input input {
+  flex: 1;
+  padding: 12px 16px;
+  background: #13151a;
+  border: 1px solid #2a2f38;
+  border-radius: 6px;
+  color: white;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.message-input input:focus {
+  outline: none;
+  border-color: #0662f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.message-input input::placeholder {
+  color: #6b7280;
+}
+
+.message-input button {
+  padding: 12px 24px;
+  background: #0662f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.message-input button:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+.message-input button:active {
+  transform: translateY(0);
+}

@@ -1,21 +1,29 @@
+import React from 'react';
 import logoImg from '/curb.png';
-import './Navbar.css'
+import './Navbar.css';
 
-function Navbar() {
+function Navbar({ onLogout }) {
     return (
         <div className="navbar">
             <div className="brand-name">
-                <img src={logoImg} alt="logo" style={{height:'5rem'}}/>
+                <a href="" target="_blank">
+                    <img src={logoImg} alt="logo" style={{height:'4rem'}}/>
+                </a>
             </div>
             <div className="navbar-links">
-                <button className="leave-btn">Leave</button>
+                <button 
+                    className="leave-btn" 
+                    onClick={onLogout}
+                >
+                    Leave
+                </button>
                 <a
                     href="https://github.com/your-repo"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="github-link"
                 >
-                GitHub
+                    GitHub
                 </a>
             </div>
         </div>

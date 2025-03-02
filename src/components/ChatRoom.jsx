@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import WebSocketService from '../WebSocketService';
 import Navbar from './Navbar';
+import MessageList from './MessageList';
+import MessageInput from './MessageInput';
 import './ChatRoom.css';
 
 const JOIN = 'JOIN';
@@ -8,118 +10,65 @@ const CHAT = 'CHAT';
 const LEAVE = 'LEAVE';
 
 function ChatRoom({ username, onLogout }) {
-  const [messages, setMessages] = useState([]);
-  const webSocketService = useRef(null);
+    const [messages, setMessages] = useState([]);
+    const webSocketService = useRef(null);
+    const isFirstConnect = useRef(true);
 
-  useEffect(() => {
-    if (!webSocketService.current) {
-      webSocketService.current = new WebSocketService();
-      webSocketService.current.connect(onConnected, onMessageReceived);
-    }
+    useEffect(() => {
+        if (!webSocketService.current) {
+            webSocketService.current = new WebSocketService();
+            webSocketService.current.connect(onConnected, onMessageReceived);
+        }
 
-    return () => {
-      webSocketService.current.disconnect();
+        return () => {
+            const leaveMessage = {
+                sender: username,
+                content: `${username} has left the chat`,
+                type: LEAVE
+            };
+            webSocketService.current.sendMessage(leaveMessage);
+            webSocketService.current.disconnect();
+        };
+    }, [username]);
+
+    const onConnected = () => {
+        if (isFirstConnect.current) {
+            const joinMessage = {
+                sender: username,
+                content: `${username} has joined the chat`,
+                type: JOIN
+            };
+            webSocketService.current.addUser(joinMessage);
+            isFirstConnect.current = false;
+        }
     };
-  }, []);
 
-  const onConnected = () => {
-    const chatMessage = {
-      sender: username,
-      content: `${username} has joined the chat`,
-      type: 'system',
+    const onMessageReceived = (message) => {
+        setMessages((prevMessages) => [...prevMessages, message]);
     };
-    webSocketService.current.addUser(chatMessage);
-  };
 
-  const onMessageReceived = (message) => {
-    setMessages((prevMessages) => [...prevMessages, message]);
-  };
+    const sendMessage = (messageContent) => {
+        if (messageContent.trim() !== '') {
+            const chatMessage = {
+                sender: username,
+                content: messageContent,
+                type: CHAT,
+            };
+            webSocketService.current.sendMessage(chatMessage);
+        }
+    };
 
-  const sendMessage = (messageContent) => {
-    if (messageContent.trim() !== '') {
-      const chatMessage = {
-        sender: username,
-        content: messageContent,
-        type: CHAT,
-      };
-      webSocketService.current.sendMessage(chatMessage);
-    }
-  };
-
-  return (
-    <div className='app-container'>
-      <Navbar />
-      <div className='chat-room'>
-        <div className='chat-list'>
-          <header className='chat-room-header'>
-            <h2>Chats</h2>
-            <button className='logout-btn' onClick={onLogout}>
-              Logout
-            </button>
-          </header>
-          {/* Add chat list items here */}
+    return (
+        <div className='app-container'>
+            <Navbar onLogout={onLogout} />
+            <div className='chat-room'>
+                <div className='chat-area'>
+                    <MessageList messages={messages} username={username} />
+                    <MessageInput onSendMessage={sendMessage} />
+                </div>
+            </div>
         </div>
-        <div className='chat-area'>
-          <MessageList messages={messages} username={username} />
-          <MessageInput onSendMessage={sendMessage} />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function MessageList({ messages, username }) {
-  return (
-    <div className="message-list">
-      {messages.map((message, index) => (
-        <div
-          key={index}
-          className={`message ${
-            message.type === 'system'
-              ? 'system'
-              : message.sender === username
-              ? 'sent'
-              : 'received'
-          }`}
-        >
-          {message.type !== 'system' && (
-            <div className="sender">{message.sender}</div>
-          )}
-          <div>{message.content}</div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function MessageInput({ onSendMessage }) {
-  const [message, setMessage] = useState('');
-
-  const handleSend = () => {
-    if (message.trim() !== '') {
-      onSendMessage(message);
-      setMessage('');
-    }
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      handleSend();
-    }
-  };
-
-  return (
-    <div className="message-input">
-      <input
-        type="text"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        onKeyPress={handleKeyPress}
-        placeholder="Type your message..."
-      />
-      <button onClick={handleSend}>Send</button>
-    </div>
-  );
+    );
 }
 
 export default ChatRoom;
