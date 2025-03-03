@@ -3,7 +3,7 @@ import { Client } from '@stomp/stompjs';
 
 // I used the IP address of the server container i deployed in azure.
 // can change this to local ip address of the server in case forked and want to test 
-const SERVER_IP = 'curbchatapi.azurewebsites.net/ws';
+const SERVER_IP = 'wss://curbchatapi.azurewebsites.net/ws';
 const WEBSOCKET_ENDPOINT = `http://${SERVER_IP}/ws`;
 const TOPIC_PUBLIC = '/topic/public';
 const SEND_MESSAGE = '/app/chat.sendMessage';
