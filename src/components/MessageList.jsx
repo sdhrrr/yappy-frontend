@@ -1,4 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+// this is the component for the list of messages in the chat area
+
+import React, { Component, useEffect, useRef } from 'react';
 import './MessageList.css';
 
 const JOIN = 'JOIN';
@@ -24,7 +26,7 @@ function MessageList({ messages, username }) {
   }, [messages]);
 
   const renderMessage = (message, index) => {
-    // Handle JOIN and LEAVE messages
+    // Handling JOIN and LEAVE messages
     if (message.type === JOIN || message.type === LEAVE) {
       const emoji = message.type === JOIN ? '👋' : '👋';
       return (
@@ -36,7 +38,7 @@ function MessageList({ messages, username }) {
       );
     }
 
-    // Handle regular CHAT messages
+    // Handling regular CHAT messages
     return (
       <div 
         key={index} 

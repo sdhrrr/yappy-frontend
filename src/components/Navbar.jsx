@@ -18,7 +18,7 @@ function Navbar({ onLogout }) {
                     Leave
                 </button>
                 <a
-                    href="https://github.com/your-repo"
+                    href="https://github.com/sdhrrr/yappy"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="github-link"

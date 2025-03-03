@@ -1,3 +1,5 @@
+// this is the initial welcome page when connected to the site
+
 import React, { useState } from 'react';
 import './JoinChat.css';
 import logoImg from '/curb.png';

@@ -73,8 +73,6 @@ button:focus-visible {
   }
 } */
 
-
-/* Add to your main CSS file */
 @media (max-width: 600px) {
   .chat-room {
     max-width: 100%;

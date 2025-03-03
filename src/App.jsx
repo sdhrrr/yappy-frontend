@@ -1,4 +1,3 @@
-// src/App.js
 import { useState } from 'react';
 import ChatRoom from './components/ChatRoom';
 import JoinChat from './components/JoinChat';

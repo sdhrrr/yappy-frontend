@@ -5,6 +5,7 @@ import MessageList from './MessageList';
 import MessageInput from './MessageInput';
 import './ChatRoom.css';
 
+// these the three types of enums i defined in backend which tell about the user status
 const JOIN = 'JOIN';
 const CHAT = 'CHAT';
 const LEAVE = 'LEAVE';

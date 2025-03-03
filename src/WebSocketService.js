@@ -1,9 +1,9 @@
-// src/WebSocketService.js
 import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
 
-// Use your IP address for both local and phone testing
-const SERVER_IP = '192.168.137.1:8080';
+// I used the IP address of the server container i deployed in azure.
+// can change this to local ip address of the server in case forked and want to test 
+const SERVER_IP = 'curbchatapi.azurewebsites.net';
 const WEBSOCKET_ENDPOINT = `http://${SERVER_IP}/ws`;
 const TOPIC_PUBLIC = '/topic/public';
 const SEND_MESSAGE = '/app/chat.sendMessage';
@@ -32,7 +32,7 @@ class WebSocketService {
       this.connected = true;
       console.log('Connected to WebSocket!');
       
-      // Subscribe to the public topic
+      // Subscribing to the public chat
       this.stompClient.subscribe(TOPIC_PUBLIC, (message) => {
         const body = JSON.parse(message.body);
         onMessageReceived(body);

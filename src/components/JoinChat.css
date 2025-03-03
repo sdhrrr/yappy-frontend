@@ -103,17 +103,17 @@ body {
   width: 100%;
   max-width: 300px;
   padding: 10px;
-  background-color: #8c8b8b; /* Dark background */
-  color: #000000; /* White text */
+  background-color: #8c8b8b;
+  color: #000000; 
   border: none;
-  border-radius: 0; /* Square corners */
+  border-radius: 0;
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .joinchat-right button:hover {
-  background-color: #e0dfdf; /* Slightly lighter on hover */
+  background-color: #e0dfdf;
 }
 
 @media (max-width: 768px) {
